@@ -33,8 +33,7 @@ Permite la modificacion de manera bulk de el precio de costo de un producto
     'website': 'http://sipecu.com.ar',
     'depends': ['base'],
     'installable': True,
-    'data': ['control_inflacion.xml'
-             ],
+    'data': ['control_inflacion.xml'],
     'images':[],    
     'auto_install': False,
 }

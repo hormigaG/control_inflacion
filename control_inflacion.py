@@ -44,7 +44,7 @@ class control_inflacion(models.Model):
     _description = 'Control de inflacion'
 
 
-    name = fields.Datetime('Fecha',default=date.today().strftime('%Y-%m-%d'))
+    name = fields.Datetime('Fecha')
     user_id = fields.One2many('res.user')
 
     category_ids = fields.Many2many('product.category','saved_pricelist_products_rel','list_id','product_id','Categorias')

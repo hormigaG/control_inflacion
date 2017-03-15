@@ -84,7 +84,7 @@ class control_inflacion(models.Model):
         coeff = 1 + (self.percent/100)
         products_tmpls = self.env['product.template'].search_read(args, ['standard_price'])        
         for product in products_tmpls:
-            self.env['product.template'].write(product['id'] ,['standard_price':product['standard_price']*coeff])
+            self.env['product.template'].write(product['id'] ,{'standard_price':product['standard_price']*coeff})
 
 
 

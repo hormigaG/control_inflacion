@@ -45,7 +45,7 @@ class control_inflacion(models.Model):
 
 
     name = fields.Datetime('Fecha')
-    user_id = fields.One2many('res.user')
+    user_id = fields.Many2one('res.user')
 
     category_ids = fields.Many2many('product.category','saved_pricelist_products_rel','list_id','product_id','Categorias')
     supplier_ids = fields.Many2many('res.partner','saved_pricelist_supplier_rel','list_id','suplier_id','Vendedor')
@@ -89,5 +89,3 @@ class control_inflacion(models.Model):
 
 
         self['state']='done'
-
-

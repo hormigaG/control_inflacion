@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_control_inflacion_tree" model="ir.ui.view">
+            <field name="name">control.inflacion.tree</field>
+            <field name="model">control.inflacion</field>
+            <field name="arch" type="xml">
+                <tree string="listas">
+                    <field name="name" />
+                    <field name="user_id" />
+
+                </tree>
+            </field>
+        </record>
+        <!--   Product Price List -->
+        <record id="view_control_inflacion" model="ir.ui.view">
+            <field name="name">Modificacion de costos</field>
+            <field name="model">control.inflacion</field>
+            <field name="arch" type="xml">
+                <form string="Price List">
+                    <group string="Modificacion de costos.">
+                        <field name="name" />
+                        <field name="user_id" />
+                        <field name="price_list" widget="selection" />
+                        <field name="category_ids" widget="many2many_tags" />
+                        <field name="supplier_ids" widget="many2many_tags" domain="[('supplier','=',1)]" />
+                        <field name="has_stock" />
+                        <field name="percent" />
+                        <field name="state" />
+                    </group>
+                    <footer>
+                        <button name="realizar" string="Realizar" type="object" class="oe_highlight" />
+                        or
+                        <button name="cancelar" string="Cancelar" type="object" class="oe_link" />
+                        </footer>
+                </form>
+            </field>
+        </record>
+        <record id="control_inflacion" model="ir.actions.act_window">
+            <field name="name">Modifcacion de precios</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">control.inflacion</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_control_inflacion_tree" />
+        </record>
+
+        <menuitem id="menu_mkt_price_list" name="Listas de precios" parent="base.marketing_menu" sequence="5"/>
+
+        <menuitem action="control_inflacion" id="action_control_inflacion" parent="menu_mkt_price_list" sequence="30" />
+    </data>
+</openerp>
+        

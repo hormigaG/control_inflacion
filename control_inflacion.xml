@@ -44,7 +44,7 @@
             <field name="view_id" ref="view_control_inflacion_tree" />
         </record>
 
-        <menuitem id="menu_mkt_price_list" name="Listas de precios" parent="base.marketing_menu" sequence="5"/>
+        <menuitem id="menu_mkt_price_list" name="Listas de precios" parent="base.menu_sales" sequence="55"/>
 
         <menuitem action="control_inflacion" id="action_control_inflacion" parent="menu_mkt_price_list" sequence="30" />
     </data>

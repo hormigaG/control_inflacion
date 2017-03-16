@@ -33,6 +33,17 @@
                         <field name="has_stock" />
                         <field name="percent" />
                     </group>
+                    <group string="Cambios.">
+                        <field name="control_inflacion_items_ids" >
+                            <tree>
+                                <field name="products_tmpl_id" />
+                                <field name="old_value" />
+                                <field name="new_value" />
+
+                            </tree>
+                        </field>
+
+                    </group>
                 </form>
             </field>
         </record>

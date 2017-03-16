@@ -44,6 +44,8 @@ class control_inflacion(models.Model):
     _description = 'Control de inflacion'
 
 
+    state = fields.Selection([('draft','Borrador'),('cancel','Cancelado'),('done','Realizado')],default='draft')
+
     name = fields.Datetime('Fecha', default=datetime.now())
     user_id = fields.Many2one('res.users')
 
@@ -52,7 +54,9 @@ class control_inflacion(models.Model):
     has_stock = fields.Boolean('Solo con stock')
     percent = fields.Float()
 
-    state = fields.Selection([('draft','Borrador'),('cancel','Cancelado'),('done','Realizado')],default='draft')
+    user_id = fields.One2many('control.inflacion.items','control_inflacion_id')
+
+
 
     @api.one
     def cancelar(self):
@@ -89,3 +93,13 @@ class control_inflacion(models.Model):
 
 
         self['state']='done'
+
+
+class control_inflacion_items(models.Model):
+
+    _name = 'control.inflacion.items'
+    _description = 'Control de inflacion'
+    control_inflacion_id= fields.Many2one('control.inflacion')
+    products_tmpl_id= fields.Many2one('product.template')
+    old_value = fields.Float()
+    new_value = fields.Float()

@@ -54,7 +54,7 @@ class control_inflacion(models.Model):
     has_stock = fields.Boolean('Solo con stock')
     percent = fields.Float()
 
-    user_id = fields.One2many('control.inflacion.items','control_inflacion_id')
+    control_inflacion_items_ids = fields.One2many('control.inflacion.items','control_inflacion_id')
 
 
 
@@ -87,11 +87,13 @@ class control_inflacion(models.Model):
 
         coeff = 1 + (self.percent/100)
         products_tmpls = self.env['product.template'].search(args)        
+        alter_items=[]
         for product in products_tmpls:
-            _logger.info(product['standard_price'])
             product.write({'standard_price':product['standard_price']*coeff})
+            alter_items.append(0,0,{'products_tmpl_id':product['id'],'old_value':product['standard_price'] , 'new_value':product['standard_price']*coeff})
 
-
+        if alter_items:
+            self['control_inflacion_items_ids']=alter_items    
         self['state']='done'
 
 
@@ -99,6 +101,7 @@ class control_inflacion_items(models.Model):
 
     _name = 'control.inflacion.items'
     _description = 'Control de inflacion'
+
     control_inflacion_id= fields.Many2one('control.inflacion')
     products_tmpl_id= fields.Many2one('product.template')
     old_value = fields.Float()

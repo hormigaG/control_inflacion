@@ -8,6 +8,7 @@
                 <tree string="listas">
                     <field name="name" />
                     <field name="user_id" />
+                    <field name="state" />
 
                 </tree>
             </field>
@@ -18,21 +19,20 @@
             <field name="model">control.inflacion</field>
             <field name="arch" type="xml">
                 <form string="Price List">
+                    <header>
+                        <button name="realizar" string="Realizar" type="object" class="oe_highlight"  />
+                        <button name="cancelar" string="Cancelar" type="object" class="oe_link"  />
+                        <field name="state" widget="statusbar" />
+                    </header>
+
                     <group string="Modificacion de costos.">
                         <field name="name" />
                         <field name="user_id" />
-                        <field name="price_list" widget="selection" />
                         <field name="category_ids" widget="many2many_tags" />
                         <field name="supplier_ids" widget="many2many_tags" domain="[('supplier','=',1)]" />
                         <field name="has_stock" />
                         <field name="percent" />
-                        <field name="state" />
                     </group>
-                    <footer>
-                        <button name="realizar" string="Realizar" type="object" class="oe_highlight" />
-                        or
-                        <button name="cancelar" string="Cancelar" type="object" class="oe_link" />
-                        </footer>
                 </form>
             </field>
         </record>

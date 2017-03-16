@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from datetime import datetime , timedelta ,  date 
+from datetime import datetime , timedelta ,  date
 from dateutil import parser
 
 from openerp import models, fields, api ,  SUPERUSER_ID
@@ -33,7 +33,7 @@ import logging
 import requests
 from lxml import etree
 
-_logger = logging.getLogger(__name__) 
+_logger = logging.getLogger(__name__)
 
 
 
@@ -44,16 +44,16 @@ class control_inflacion(models.Model):
     _description = 'Control de inflacion'
 
 
-    name = fields.Datetime('Fecha')
-    user_id = fields.Many2one('res.user')
+    name = fields.Datetime('Fecha', default=datetime.now())
+    user_id = fields.Many2one('res.users')
 
     category_ids = fields.Many2many('product.category','saved_pricelist_products_rel','list_id','product_id','Categorias')
     supplier_ids = fields.Many2many('res.partner','saved_pricelist_supplier_rel','list_id','suplier_id','Vendedor')
     has_stock = fields.Boolean('Solo con stock')
-    percent = fields.Float('%')
+    percent = fields.Float()
 
-    state = fields.Selection('Estado',[('draft','Borrador'),('cancel','Cancelado'),('done','Realizado')])
-    
+    state = fields.Selection([('draft','Borrador'),('cancel','Cancelado'),('done','Realizado')],default='draft')
+
     @api.one
     def cancelar(self):
         self['state']='cancel'
@@ -82,10 +82,10 @@ class control_inflacion(models.Model):
             args.append(('qty_available','>',1)) 
 
         coeff = 1 + (self.percent/100)
-        products_tmpls = self.env['product.template'].search_read(args, ['standard_price'])        
+        products_tmpls = self.env['product.template'].search(args)        
         for product in products_tmpls:
-            self.env['product.template'].write(product['id'] ,{'standard_price':product['standard_price']*coeff})
-
+            _logger.info(product['standard_price'])
+            product.write({'standard_price':product['standard_price']*coeff})
 
 
         self['state']='done'
